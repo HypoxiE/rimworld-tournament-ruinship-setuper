@@ -87,3 +87,4 @@ powershell -ExecutionPolicy Bypass -File "%~dp0download_mods.ps1"
 goto :eof
 
 :end
+echo Удачи на турнире^^!
