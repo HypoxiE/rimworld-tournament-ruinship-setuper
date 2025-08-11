@@ -19,6 +19,10 @@ if "%1"=="-mode" (
 		call :ScenarioInstall
 		goto end
 	)
+	if "%2"=="all" (
+		call :installAll
+		goto end
+	)
 	echo Ошибка: Режима %2 не существует
 	goto end
 )
