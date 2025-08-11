@@ -15,6 +15,10 @@ if "%1"=="-mode" (
 		call :ModsConfigInstall
 		goto end
 	)
+	if "%2"=="scenario" (
+		call :ScenarioInstall
+		goto end
+	)
 	echo Ошибка: Режима %2 не существует
 	goto end
 )
@@ -41,8 +45,8 @@ if /i "%choice%"=="2" (
 	goto ask
 )
 if /i "%choice%"=="3" (
-
-	echo Пока функция не готова. Вам что-то ещё?
+	call :ScenarioInstall
+	echo Вам что-то ещё?
 	goto ask
 )
 if /i "%choice%"=="4" (
@@ -60,15 +64,21 @@ echo Варианта %choice% не существует
 goto ask
 
 ::	Функции
-:ModsConfigInstall
-powershell -ExecutionPolicy Bypass -File "%~dp0install_modsconfig.ps1"
-goto :eof
-
 :modsInstall
 powershell -ExecutionPolicy Bypass -File "%~dp0download_mods.ps1"
 goto :eof
 
+:ScenarioInstall
+powershell -ExecutionPolicy Bypass -File "%~dp0install_scenario.ps1"
+goto :eof
+
+:ModsConfigInstall
+powershell -ExecutionPolicy Bypass -File "%~dp0install_modsconfig.ps1"
+goto :eof
+
 :installAll
+powershell -ExecutionPolicy Bypass -File "%~dp0install_modsconfig.ps1"
+powershell -ExecutionPolicy Bypass -File "%~dp0install_scenario.ps1"
 powershell -ExecutionPolicy Bypass -File "%~dp0download_mods.ps1"
 goto :eof
 
