@@ -2,6 +2,23 @@
 setlocal enabledelayedexpansion
 chcp 65001
 
+if "%1"=="-mode" (
+	if "%2"=="" (
+		echo Ошибка: Аргумент не передан
+		exit /b 1
+	)
+	if "%2"=="mods" (
+		call :modsInstall
+		goto end
+	)
+	if "%2"=="config" (
+		call :ModsConfigInstall
+		goto end
+	)
+	echo Ошибка: Режима %2 не существует
+	goto end
+)
+
 echo Укажите, что вам нужно сделать:
 :ask
 echo 1) Установить моды (они будут только установлены в качестве архива и их надо будет вручную распаковать)
@@ -13,13 +30,14 @@ echo 5) Выйти
 set /p choice=Введите нужный пункт:
 
 if /i "%choice%"=="1" (
-	powershell -ExecutionPolicy Bypass -File "%~dp0download_mods.ps1"
+	call :modsInstall
+	echo Не забудьте распаковать моды из архива в папке Mods^^!
 	echo Вам что-то ещё?
 	goto ask
 )
 if /i "%choice%"=="2" (
-
-	echo Пока функция не готова. Вам что-то ещё?
+	call :ModsConfigInstall
+	echo Вам что-то ещё?
 	goto ask
 )
 if /i "%choice%"=="3" (
@@ -28,9 +46,10 @@ if /i "%choice%"=="3" (
 	goto ask
 )
 if /i "%choice%"=="4" (
-	powershell -ExecutionPolicy Bypass -File "%~dp0download_mods.ps1"
+	call :installAll
 
 	echo Всё готово^^! Осталось только распаковать моды из архива в папке Mods и можно начинать играть^^!
+	pause
 	goto end
 )
 if /i "%choice%"=="5" (
@@ -39,5 +58,18 @@ if /i "%choice%"=="5" (
 )
 echo Варианта %choice% не существует
 goto ask
+
+::	Функции
+:ModsConfigInstall
+powershell -ExecutionPolicy Bypass -File "%~dp0install_modsconfig.ps1"
+goto :eof
+
+:modsInstall
+powershell -ExecutionPolicy Bypass -File "%~dp0download_mods.ps1"
+goto :eof
+
+:installAll
+powershell -ExecutionPolicy Bypass -File "%~dp0download_mods.ps1"
+goto :eof
 
 :end
