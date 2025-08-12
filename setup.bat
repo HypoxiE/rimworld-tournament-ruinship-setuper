@@ -2,6 +2,23 @@
 setlocal enabledelayedexpansion
 chcp 65001
 
+powershell -ExecutionPolicy Bypass -File "%~dp0paths_checker.ps1"
+if %ERRORLEVEL%==1 (
+	echo Ошибка: директория "%%userprofile%%\AppData\LocalLow\Ludeon Studios\RimWorld by Ludeon Studios" не найдена
+	pause
+	goto end
+)
+if %ERRORLEVEL%==2 (
+	echo Ошибка: директория "%%userprofile%%\AppData\LocalLow\Ludeon Studios\RimWorld by Ludeon Studios\Scenarios" не найдена
+	pause
+	goto end
+)
+if %ERRORLEVEL%==3 (
+	echo Ошибка: директория "%%userprofile%%\AppData\LocalLow\Ludeon Studios\RimWorld by Ludeon Studios\Config" не найдена
+	pause
+	goto end
+)
+
 if "%1"=="-mode" (
 	if "%2"=="" (
 		echo Ошибка: Аргумент не передан
