@@ -1,4 +1,4 @@
-$fileId = "1eEBGmfh7Gu2g_KQoCiVg8XsRM9m_-DZB"
+$fileId = "1FjXPGNAZLpm_rYxnsEDvAJWi3z2ycwk0"
 $baseUrl = "https://drive.google.com/uc?export=download&id=$fileId"
 
 $rimworldPath = Join-Path $env:USERPROFILE "AppData\LocalLow\Ludeon Studios\RimWorld by Ludeon Studios"
